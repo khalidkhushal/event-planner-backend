@@ -3,6 +3,7 @@ const cors = require("cors");
 const { PORT, MONGO_URI } = require("./utils/secret");
 const DBConnect = require("./config/connection");
 const homeRouter = require("./routes/home");
+const userRouter = require("./routes/user/user.router");
 
 // express app initialize
 
@@ -22,6 +23,7 @@ DBConnect(MONGO_URI);
 // routes
 
 app.use("/", homeRouter);
+app.use("/api/user", userRouter);
 
 // initialize server at PORT
 
