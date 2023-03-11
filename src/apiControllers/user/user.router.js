@@ -1,8 +1,11 @@
 const { Router } = require("express");
+const userDAO = require("../../dataAccess/user/user.dao");
 const userService = require("../../services/user/user.service");
 const { apiRes } = require("../../utils/apiHelpers");
 const userRouter = Router();
+const bcrypt = require("bcrypt");
 const { apiError } = require("../../utils/error");
+const passport = require("passport");
 const { AuthMiddleware } = require("../../middlewares/Auth/authMiddleware");
 
 userRouter.post("/login", [], async (req, res, next) => {

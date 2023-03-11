@@ -4,8 +4,7 @@
   "description": "",
   "scripts": {
     "test": "npm run test",
-    "watch": "nodemon src/app.js",
-    "start": "node src/app.js"
+    "watch": "nodemon src/app.js"
   },
   "repository": {
     "type": "git",
