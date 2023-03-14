@@ -35,7 +35,6 @@ app.use("/", homeRouter);
 app.use("/api/user", userRouter);
 
 // handle errors
-
 app.use("*", errorHandlerAll);
 
 // initialize server at PORT

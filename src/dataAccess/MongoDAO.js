@@ -29,22 +29,8 @@ class MongoDAO {
     Object.assign(newData, data._doc);
     newData.id = data._id;
     delete newData._id;
-    delete newData.password;
     delete newData.__v;
     return newData;
-  }
-
-  async findByEmail(email) {
-    const user = await this.model.find({ email });
-    if (user[0]) {
-      const newData = {};
-      Object.assign(newData, user[0]?._doc);
-      newData.id = user[0]?._doc._id;
-      delete newData._id;
-      delete newData.__v;
-      return newData;
-    }
-    return user[0];
   }
 
   async delete(id) {

@@ -8,6 +8,20 @@ class UserDAO extends MongoDAO {
     super(data.model);
     this.model = data.model;
   }
+
+  async findByEmail(email) {
+    const user = await this.model.find({ email, deleted:{$ne: true}});
+    if (user[0]) {
+      const newData = {};
+      Object.assign(newData, user[0]?._doc);
+      newData.id = user[0]?._doc._id;
+      delete newData._id;
+      delete newData.__v;
+      return newData;
+    }
+    return user[0];
+  }
+  
 }
 
 const userDAO = new UserDAO({ model: userModel });

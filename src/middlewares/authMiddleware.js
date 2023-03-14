@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
-const { apiError } = require("../../utils/error");
-const { JWT_ACCESS_TOKEN_SECRET } = require("../../utils/secret");
+const { apiError } = require("../utils/error");
+const { JWT_ACCESS_TOKEN_SECRET } = require("../utils/secret");
 
 exports.AuthMiddleware = () => {
   return (req, res, next) => {
@@ -10,6 +10,7 @@ exports.AuthMiddleware = () => {
       const token = req.headers["authorization"].split("Bearer ").join("");
 
       jwt.verify(token, JWT_ACCESS_TOKEN_SECRET);
+      req.user = jwt.decode(token)
       console.log("Authenticated!!");
       next();
     } catch (e) {
