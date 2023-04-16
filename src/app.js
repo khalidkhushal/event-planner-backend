@@ -1,12 +1,12 @@
 const express = require("express");
 const cors = require("cors");
-const { PORT, MONGO_URI } = require("./utils/secret");
 const DBConnect = require("./config/connection");
-const homeRouter = require("./apiControllers/home");
-const userRouter = require("./apiControllers/user/user.router");
-const { errorHandlerAll } = require("./utils/error");
 const morgan = require("morgan");
 const passport = require("passport");
+const { PORT, MONGO_URI } = require("./utils/secret");
+const { errorHandlerAll } = require("./utils/error");
+const homeRouter = require("./apiControllers/home");
+const userRouter = require("./apiControllers/user/user.router");
 
 // express app initialize
 
@@ -15,6 +15,7 @@ const app = express();
 // passport
 
 const configPassport = require("./config/passport");
+const eventRouter = require("./apiControllers/event/event.router");
 configPassport(passport);
 
 // express app configurations
@@ -33,6 +34,7 @@ DBConnect(MONGO_URI);
 
 app.use("/", homeRouter);
 app.use("/api/user", userRouter);
+app.use("/api/event", eventRouter);
 
 // handle errors
 app.use("*", errorHandlerAll);

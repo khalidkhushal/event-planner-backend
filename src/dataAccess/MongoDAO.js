@@ -5,30 +5,72 @@ class MongoDAO {
   }
 
   async create(data) {
-    const id = await this.model.create(data);
-    return id;
+    const result = await this.model.create(data);
+    return result._id;
   }
 
-  async find(query, sort = { createdAt: -1 }) {
-    const data = await this.model.find({ ...query }).sort(sort);
-    const result = data.map((d) => {
-      const newData = {};
-      Object.assign(newData, d._doc);
-      newData.id = d._id;
+  async find(query, page = 1, perPage = 10, sort = { createdAt: "-1" }) {
+    if (page < 1) throw Error("page can not be less than 1");
+    if (perPage < 1) throw Error("perPage can not be less than 1");
+
+    const skip = (page - 1) * perPage - 1 > 0 ? (page - 1) * perPage - 1 : 0;
+    const limit = page > 1 ? perPage + 2 : perPage + 1;
+
+    const response = await this.model
+      .find({ ...query })
+      .sort(sort)
+      .limit(limit)
+      .skip(skip);
+
+    const result = response.map((d) => {
+      const newData = object;
+      newData.id = object._id;
       delete newData._id;
       delete newData.password;
       delete newData.__v;
       return newData;
     });
-    return result;
+
+    let hasNext = null;
+    if (page > 1) {
+      hasNext = result.length >= perPage + 2;
+    } else if (page == 1) {
+      hasNext = result.length == perPage + 1;
+    } else {
+      hasNext = false;
+    }
+
+    const hasPrevious = page > 1 ? true : false;
+
+    if (result.length > perPage && page == 1) {
+      result.pop();
+    } else if (result.length == perPage + 2 && page > 1) {
+      result.pop();
+      result.shift();
+    } else if (result.length == perPage + 1 && page > 1) {
+      result.shift();
+    } else if (result.length <= perPage && page > 1) {
+      result.shift();
+    }
+
+    const pagination = {
+      page,
+      perPage,
+      hasNext,
+      hasPrevious,
+    };
+    return {
+      data: result,
+      pagination,
+    };
   }
 
   async findById(id) {
     const data = await this.model.findById(id);
-    const newData = {};
-    Object.assign(newData, data._doc);
-    newData.id = data._id;
+    const newData = object;
+    newData.id = object._id;
     delete newData._id;
+    delete newData.password;
     delete newData.__v;
     return newData;
   }
@@ -39,9 +81,14 @@ class MongoDAO {
   }
 
   async update(id, data) {
-    const obj = await this.findById(id);
-    const newObj = await this.model.findByIdAndUpdate(id, data);
-    return newObj;
+    const updated = await this.model.findByIdAndUpdate(id, data);
+    console.log({ updated });
+    const newData = updated;
+    newData.id = updated._id;
+    delete newData._id;
+    delete newData.password;
+    delete newData.__v;
+    return newData;
   }
 }
 

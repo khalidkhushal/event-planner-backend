@@ -10,18 +10,24 @@ class UserDAO extends MongoDAO {
   }
 
   async findByEmail(email) {
-    const user = await this.model.find({ email, deleted:{$ne: true}});
-    if (user[0]) {
-      const newData = {};
-      Object.assign(newData, user[0]?._doc);
-      newData.id = user[0]?._doc._id;
-      delete newData._id;
-      delete newData.__v;
-      return newData;
-    }
+    const user = await this.model.find({ email });
+    if (user[0]) return this.processResult(user[0]);
     return user[0];
   }
-  
+
+  async findByIdForUpdatePassword(id) {
+    const user = await this.model.find({ _id: id });
+    if (user[0]) return this.processResult(user[0]);
+    return user[0];
+  }
+
+  processResult(object) {
+    const newData = object;
+    newData.id = object._id;
+    delete newData._id;
+    delete newData.__v;
+    return newData;
+  }
 }
 
 const userDAO = new UserDAO({ model: userModel });

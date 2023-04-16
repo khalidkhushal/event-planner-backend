@@ -1,0 +1,62 @@
+const { Schema, model, Types } = require("mongoose");
+
+const schemaFields = {
+  userId: { type: Types.ObjectId, required: true },
+
+  mainPageMedia: { type: String, required: false, default: null },
+  mainVideoAligment: { type: String, required: false, default: null },
+  secondaryMedia: { type: String, required: false, default: null },
+  secondaryMediaAligment: { type: String, required: false, default: null },
+  introEffect: { type: String, required: false, default: null },
+  boxColor: { type: String, required: false, default: null },
+  decorationStyle: { type: String, required: false, default: null },
+  countdownStyle: { type: String, required: false, default: null },
+  countdownFont: { type: String, required: false, default: null },
+  countdownColor: { type: String, required: false, default: null },
+  countdownSize: { type: String, required: false, default: null },
+  titleFont: { type: String, required: false, default: null },
+  titleColor: { type: String, required: false, default: null },
+  titleSize: { type: String, required: false, default: null },
+  namesFont: { type: String, required: false, default: null },
+  namescolor: { type: String, required: false, default: null },
+  namesSize: { type: String, required: false, default: null },
+  boxTextFont: { type: String, required: false, default: null },
+  boxTextColor: { type: String, required: false, default: null },
+  boxTextSize: { type: String, required: false, default: null },
+  otherTextFont: { type: String, required: false, default: null },
+  otherTextColor: { type: String, required: false, default: null },
+  otherTextSize: { type: String, required: false, default: null },
+
+  eventDate: { type: String, required: true },
+  headerNames: { type: String, required: true },
+  primarytitle: { type: String, required: true },
+  primaryLocation: { type: Schema.Types.Mixed, required: true },
+  isSecondary: { type: Boolean, required: false, default: null },
+  secondaryTitle: { type: String, required: false, default: null },
+  secondaryLocation: {
+    type: Schema.Types.Mixed,
+    required: false,
+    default: { lat: null, long: null, text: null },
+  },
+  secondaryTime: { type: String, required: false, default: null },
+  isTransport: { type: Boolean, required: true },
+  transportDescription: { type: String, required: false, default: null },
+  parkingDescription: { type: String, required: false, default: null },
+  parkingAccess: { type: String, required: false, default: null },
+  dressCode: { type: String, required: false, default: null },
+  hashtags: [{ type: String, required: false, default: [] }],
+  fbLink: { type: String, required: false, default: null },
+  instaLink: { type: String, required: false, default: null },
+  tikTokLink: { type: String, required: false, default: null },
+  googlePhotosLink: { type: String, required: false, default: null },
+  noGiftsActive: { type: Boolean, required: false, default: null },
+  giftstext: { type: String, required: false, default: null },
+  bizum: { type: String, required: false, default: null },
+  paypalAccount: { type: String, required: false, default: null },
+  bankAccount: { type: String, required: false, default: null },
+  weddingList: { type: String, required: false, default: null },
+};
+
+const schema = new Schema(schemaFields, { timestamps: true });
+const eventModel = model("event", schema);
+module.exports = eventModel;
