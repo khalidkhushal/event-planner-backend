@@ -1,3 +1,4 @@
+const EventDataModel = require("../../datamodels/event/event.datamodel");
 const eventModel = require("../../models/events/events.model");
 const MongoDAO = require("../MongoDAO");
 
@@ -5,7 +6,7 @@ class EventDAO extends MongoDAO {
   model = null;
 
   constructor(data) {
-    super(data.model);
+    super({ model: data.model, dataModel: data.dataModel });
     this.model = data.model;
   }
 
@@ -20,5 +21,5 @@ class EventDAO extends MongoDAO {
   }
 }
 
-const eventDAO = new EventDAO({ model: eventModel });
+const eventDAO = new EventDAO({ model: eventModel, dataModel: EventDataModel });
 module.exports = eventDAO;

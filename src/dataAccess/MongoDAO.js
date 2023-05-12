@@ -1,7 +1,11 @@
+const { extractData } = require("../utils/common");
+
 class MongoDAO {
   model = null;
-  constructor(model) {
+  dataModel = null;
+  constructor({ model, dataModel }) {
     this.model = model;
+    this.dataModel = dataModel;
   }
 
   async create(data) {
@@ -23,12 +27,9 @@ class MongoDAO {
       .skip(skip);
 
     const result = response.map((d) => {
-      const newData = object;
-      newData.id = object._id;
-      delete newData._id;
-      delete newData.password;
-      delete newData.__v;
-      return newData;
+      const extract = extractData(this.dataModel, d);
+      extract.id = d._id || null;
+      return extract;
     });
 
     let hasNext = null;
@@ -67,12 +68,9 @@ class MongoDAO {
 
   async findById(id) {
     const data = await this.model.findById(id);
-    const newData = object;
-    newData.id = object._id;
-    delete newData._id;
-    delete newData.password;
-    delete newData.__v;
-    return newData;
+    const extract = extractData(this.dataModel, data);
+    extract.id = data._id || null;
+    return extract;
   }
 
   async delete(id) {
@@ -82,13 +80,9 @@ class MongoDAO {
 
   async update(id, data) {
     const updated = await this.model.findByIdAndUpdate(id, data);
-    console.log({ updated });
-    const newData = updated;
-    newData.id = updated._id;
-    delete newData._id;
-    delete newData.password;
-    delete newData.__v;
-    return newData;
+    const extract = extractData(this.dataModel, updated);
+    extract.id = updated._id || null;
+    return extract;
   }
 }
 

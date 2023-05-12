@@ -3,13 +3,13 @@ const bcrypt = require("bcrypt");
 const { SALT_ROUNDS } = require("../../utils/secret");
 
 const schemaFields = {
-  username: {
+  email: {
     type: String,
     required: true,
     index: { unique: true, partialFilterExpression: { deleted: false } },
   },
   password: { type: String, required: true },
-  email: { type: String, required: false, default: null },
+  username: { type: String, required: false, default: null },
   phoneNumber: { type: String, required: false, default: null },
   paymentDone: { type: Boolean, required: false, default: false },
   accessCode: { type: String, required: false, default: null },

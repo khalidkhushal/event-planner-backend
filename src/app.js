@@ -7,6 +7,9 @@ const { PORT, MONGO_URI } = require("./utils/secret");
 const { errorHandlerAll } = require("./utils/error");
 const homeRouter = require("./apiControllers/home");
 const userRouter = require("./apiControllers/user/user.router");
+const eventRouter = require("./apiControllers/event/event.router");
+const configPassport = require("./config/passport");
+const fileRouter = require("./apiControllers/files/file.router");
 
 // express app initialize
 
@@ -14,8 +17,6 @@ const app = express();
 
 // passport
 
-const configPassport = require("./config/passport");
-const eventRouter = require("./apiControllers/event/event.router");
 configPassport(passport);
 
 // express app configurations
@@ -35,6 +36,7 @@ DBConnect(MONGO_URI);
 app.use("/", homeRouter);
 app.use("/api/user", userRouter);
 app.use("/api/event", eventRouter);
+app.use("/api/file", fileRouter);
 
 // handle errors
 app.use("*", errorHandlerAll);

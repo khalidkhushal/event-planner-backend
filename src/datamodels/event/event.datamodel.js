@@ -1,0 +1,54 @@
+const BaseDataModel = require("../base.datamodel");
+
+class EventDataModel extends BaseDataModel {
+  userId = null;
+  mainPageMedia = null;
+  mainVideoAligment = null;
+  secondaryMedia = null;
+  secondaryMediaAligment = null;
+  introEffect = null;
+  boxColor = null;
+  decorationStyle = null;
+  countdownStyle = null;
+  countdownFont = null;
+  countdownColor = null;
+  countdownSize = null;
+  titleFont = null;
+  titleColor = null;
+  titleSize = null;
+  namesFont = null;
+  namescolor = null;
+  namesSize = null;
+  boxTextFont = null;
+  boxTextColor = null;
+  boxTextSize = null;
+  otherTextFont = null;
+  otherTextColor = null;
+  otherTextSize = null;
+  eventDate = null;
+  headerNames = null;
+  primarytitle = null;
+  primaryLocation = null;
+  isSecondary = null;
+  secondaryTitle = null;
+  secondaryLocation = null;
+  secondaryTime = null;
+  isTransport = null;
+  transportDescription = null;
+  parkingDescription = null;
+  parkingAccess = null;
+  dressCode = null;
+  hashtags = null;
+  fbLink = null;
+  instaLink = null;
+  tikTokLink = null;
+  googlePhotosLink = null;
+  noGiftsActive = null;
+  giftstext = null;
+  bizum = null;
+  paypalAccount = null;
+  bankAccount = null;
+  weddingList = null;
+}
+
+module.exports = EventDataModel;

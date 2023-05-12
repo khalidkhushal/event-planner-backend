@@ -1,3 +1,4 @@
+const userDataModel = require("../../datamodels/user/user.datamodel");
 const userModel = require("../../models/user/user.model");
 const MongoDAO = require("../MongoDAO");
 
@@ -5,7 +6,7 @@ class UserDAO extends MongoDAO {
   model = null;
 
   constructor(data) {
-    super(data.model);
+    super({ model: data.model, dataModel: data.dataModel });
     this.model = data.model;
   }
 
@@ -30,5 +31,5 @@ class UserDAO extends MongoDAO {
   }
 }
 
-const userDAO = new UserDAO({ model: userModel });
+const userDAO = new UserDAO({ model: userModel, dataModel: userDataModel });
 module.exports = userDAO;
